@@ -27,7 +27,7 @@
                             <a href="{{ route('penduduk.create') }}" class="btn btn-primary btn-sm ms-auto">Tambah</a>
                         </div>
                         <div class="card-body">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered datatables">
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">No</th>
@@ -43,7 +43,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->KTP }}</td>
                                             <td>{{ $item->Nama }}</td>
-                                            <td>{{ $item->kelompok->NamaKelompok }}</td>
+                                            <td>{{ $item->kelompok->NamaKelompok ?? '-' }}</td>
                                             <td>
                                                 <div class="btn-group dropstart">
                                                     <button type="button" class="btn btn-sm btn-secondary dropdown-toggle"
@@ -106,5 +106,6 @@
             </div> <!--end::Row-->
         </div> <!--end::Container-->
     </div> <!--end::App Content-->
-    <!-- Modal -->
+    @push('javascript')
+    @endpush
 @endsection

@@ -27,7 +27,7 @@
                             <a href="{{ route('kelompok.create') }}" class="btn btn-primary btn-sm ms-auto">Tambah</a>
                         </div>
                         <div class="card-body">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered datatables">
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">No</th>
@@ -104,5 +104,6 @@
             </div> <!--end::Row-->
         </div> <!--end::Container-->
     </div> <!--end::App Content-->
-    <!-- Modal -->
+    @push('javascript')
+    @endpush
 @endsection

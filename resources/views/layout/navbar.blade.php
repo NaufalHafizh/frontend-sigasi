@@ -9,9 +9,9 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <!--begin::User Image-->
-                    <li class="user-header text-bg-primary">
+                    <li class="user-header text-bg-dark">
                         <p>
-                            Alexander Pierce - Web Developer
+                            Kecamatan
                         </p>
                     </li> <!--end::User Image--> <!--begin::Menu Body-->
                     <li class="user-footer">

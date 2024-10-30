@@ -47,10 +47,14 @@
                                         Jenis Barang
                                     </label>
                                     <select class="form-select" id="validationCustom04" name="jenis_barang" required>
-                                        <option selected disabled value="">Choose...</option>
-                                        @foreach ($jenis_barangs as $item)
-                                            <option value="{{ $item->IDJenisBarang }}">{{ $item->JenisBarang }}</option>
-                                        @endforeach
+                                        @if (is_null($jenis_barangs))
+                                            <option selected disabled value="">Data Tidak ada</option>
+                                        @else
+                                            <option selected disabled value="">Choose...</option>
+                                            @foreach ($jenis_barangs as $item)
+                                                <option value="{{ $item->IDJenisBarang }}">{{ $item->JenisBarang }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary ms-auto">Submit</button>

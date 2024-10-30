@@ -34,10 +34,15 @@
                                             Donatur
                                         </label>
                                         <select class="form-select" id="validationCustom04" name="donatur" required>
-                                            <option selected disabled value="">Pilih Donatur</option>
-                                            @foreach ($donaturs as $item)
-                                                <option value="{{ $item->IDDonatur }}">{{ $item->NamaPerusahaan }}</option>
-                                            @endforeach
+                                            @if (is_null($donaturs))
+                                                <option selected disabled value="">Data Tidak ada</option>
+                                            @else
+                                                <option selected disabled value="">Pilih Donatur</option>
+                                                @foreach ($donaturs as $item)
+                                                    <option value="{{ $item->IDDonatur }}">{{ $item->NamaPerusahaan }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="mb-3 col-6">
@@ -45,11 +50,16 @@
                                             Barang
                                         </label>
                                         <div class="input-group">
-                                            <select class="form-select" id="barang" name="jenis_barang">
-                                                <option selected disabled value="">Pilih Barang</option>
-                                                @foreach ($barangs as $item)
-                                                    <option value="{{ $item->IDBarang }}">{{ $item->NamaBarang }}</option>
-                                                @endforeach
+                                            <select class="form-select" id="barang" name="barang">
+                                                @if (is_null($barangs))
+                                                    <option selected disabled value="">Data Tidak ada</option>
+                                                @else
+                                                    <option selected disabled value="">Pilih Barang</option>
+                                                    @foreach ($barangs as $item)
+                                                        <option value="{{ $item->IDBarang }}">{{ $item->NamaBarang }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
                                             </select>
                                             <span class="input-group-text">
                                                 <a id="addItemBtn" class="btn btn-sm">
@@ -83,32 +93,32 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#addItemBtn').on('click', function() {
-                const itemName = $('#barang option:selected').text();
-                const barangId = $('#barang option:selected').val();
+    @push('javascript')
+        <script>
+            $(document).ready(function() {
+                $('#addItemBtn').on('click', function() {
+                    const itemName = $('#barang option:selected').text();
+                    const barangId = $('#barang option:selected').val();
 
-                console.log(itemName, barangId);
+                    console.log(itemName, barangId);
 
 
-                if (!itemName || itemName === 'Pilih Barang') {
-                    alert("Silakan pilih barang!");
-                    return;
-                }
+                    if (!itemName || itemName === 'Pilih Barang') {
+                        alert("Silakan pilih barang!");
+                        return;
+                    }
 
-                // Check if item already exists
-                const existingRow = $(`.barang-${barangId}`);
+                    // Check if item already exists
+                    const existingRow = $(`.barang-${barangId}`);
 
-                if (existingRow.length > 0) {
-                    // If exists, get current quantity and increment
-                    const qtyInput = existingRow.find('input[name="qty[]"]');
-                    const currentQty = parseInt(qtyInput.val()) || 0;
-                    qtyInput.val(currentQty + 1);
-                } else {
-                    // If not exists, add new row
-                    $('#tableBody').append(`
+                    if (existingRow.length > 0) {
+                        // If exists, get current quantity and increment
+                        const qtyInput = existingRow.find('input[name="qty[]"]');
+                        const currentQty = parseInt(qtyInput.val()) || 0;
+                        qtyInput.val(currentQty + 1);
+                    } else {
+                        // If not exists, add new row
+                        $('#tableBody').append(`
                         <tr class="barang-${barangId}">
                             <td>
                                 ${itemName}
@@ -130,42 +140,43 @@
                             </td>
                         </tr>
                     `);
-                }
-
-                // Reset barang selection
-                $('#barang').prop('selectedIndex', 0);
-            });
-
-            // Handle remove button click
-            $(document).on('click', '.btn-remove', function() {
-                $(this).closest('tr').remove();
-            });
-
-            // Form submission validation
-            $('form').on('submit', function(e) {
-                const rows = $('#tableBody tr').length;
-                if (rows === 0) {
-                    e.preventDefault();
-                    alert('Silakan tambahkan minimal satu barang!');
-                    return false;
-                }
-
-                // Validate quantities
-                let valid = true;
-                $('input[name="qty[]"]').each(function() {
-                    const qty = parseInt($(this).val());
-                    if (isNaN(qty) || qty < 1) {
-                        valid = false;
-                        return false; // break loop
                     }
+
+                    // Reset barang selection
+                    $('#barang').prop('selectedIndex', 0);
                 });
 
-                if (!valid) {
-                    e.preventDefault();
-                    alert('Jumlah barang harus valid dan minimal 1!');
-                    return false;
-                }
+                // Handle remove button click
+                $(document).on('click', '.btn-remove', function() {
+                    $(this).closest('tr').remove();
+                });
+
+                // Form submission validation
+                $('form').on('submit', function(e) {
+                    const rows = $('#tableBody tr').length;
+                    if (rows === 0) {
+                        e.preventDefault();
+                        alert('Silakan tambahkan minimal satu barang!');
+                        return false;
+                    }
+
+                    // Validate quantities
+                    let valid = true;
+                    $('input[name="qty[]"]').each(function() {
+                        const qty = parseInt($(this).val());
+                        if (isNaN(qty) || qty < 1) {
+                            valid = false;
+                            return false; // break loop
+                        }
+                    });
+
+                    if (!valid) {
+                        e.preventDefault();
+                        alert('Jumlah barang harus valid dan minimal 1!');
+                        return false;
+                    }
+                });
             });
-        });
-    </script>
+        </script>
+    @endpush
 @endsection

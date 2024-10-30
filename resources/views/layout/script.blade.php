@@ -43,7 +43,12 @@
 <script script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
     integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.min.js"></script>
 
 @if (session()->has('success') == 1)
     <script>
@@ -65,3 +70,9 @@
         });
     </script>
 @endif
+
+<script>
+    let table = new DataTable('.datatables');
+</script>
+
+@stack('javascript')

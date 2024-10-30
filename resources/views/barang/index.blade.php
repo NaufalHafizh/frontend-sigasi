@@ -27,7 +27,7 @@
                             <a href="{{ route('barang.create') }}" class="btn btn-primary btn-sm ms-auto">Tambah</a>
                         </div>
                         <div class="card-body">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered datatables">
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">No</th>
@@ -42,7 +42,7 @@
                                         <tr class="align-middle">
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->NamaBarang }}</td>
-                                            <td>{{ $item->jenis_barang->JenisBarang }}</td>
+                                            <td>{{ $item->jenis_barang->JenisBarang ?? '-' }}</td>
                                             <td>{{ $item->HargaSatuan }}</td>
                                             <td>
                                                 <div class="btn-group dropstart">
@@ -105,4 +105,6 @@
             </div> <!--end::Row-->
         </div> <!--end::Container-->
     </div> <!--end::App Content-->
+    @push('javascript')
+    @endpush
 @endsection
